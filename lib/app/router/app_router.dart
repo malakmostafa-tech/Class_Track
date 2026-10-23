@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../features/intro/intro.dart';
 import 'app_routes.dart';
 
 /// Central route generator for the ClassTrack application.
@@ -16,16 +17,18 @@ final class AppRouter {
 
     switch (settings.name) {
       // ==========================================
-      // Initial / Splash
+      // Initial / Splash / Intro
       // ==========================================
       case AppRoutes.initial:
       case AppRoutes.splash:
         return _buildRoute(
-          const _PlaceholderPage(
-            title: 'Splash Screen',
-            routeName: AppRoutes.splash,
-            featurePath: 'lib/features/auth/presentation/pages/splash_page.dart',
-          ),
+          const SplashPage(),
+          settings: settings,
+        );
+
+      case AppRoutes.intro:
+        return _buildFadeRoute(
+          const IntroPage(),
           settings: settings,
         );
 
@@ -365,6 +368,29 @@ final class AppRouter {
     return MaterialPageRoute<dynamic>(
       builder: (_) => page,
       settings: settings,
+    );
+  }
+
+  /// Helper to build a smooth fade transition route.
+  static Route<dynamic> _buildFadeRoute(
+    Widget page, {
+    required RouteSettings settings,
+    Duration duration = const Duration(milliseconds: 350),
+  }) {
+    return PageRouteBuilder<dynamic>(
+      settings: settings,
+      transitionDuration: duration,
+      reverseTransitionDuration: duration,
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeInOut,
+          ),
+          child: child,
+        );
+      },
     );
   }
 

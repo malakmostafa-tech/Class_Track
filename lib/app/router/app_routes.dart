@@ -6,10 +6,12 @@ abstract final class AppRoutes {
   const AppRoutes._();
 
   // ==========================================
-  // Core / Splash
+  // Core / Splash & Intro
   // ==========================================
   static const String initial = '/';
   static const String splash = '/splash';
+  static const String intro = '/intro';
+  static const String onboarding = '/intro';
 
   // ==========================================
   // Auth Feature

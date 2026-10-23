@@ -16,17 +16,17 @@ abstract final class AppTypography {
   // Light Text Theme
   // ==========================================
   static TextTheme get lightTextTheme => _buildTextTheme(
-        textColor: AppColors.lightTextPrimary,
-        secondaryColor: AppColors.lightTextSecondary,
-      );
+    textColor: AppColors.lightTextPrimary,
+    secondaryColor: AppColors.lightTextSecondary,
+  );
 
   // ==========================================
   // Dark Text Theme
   // ==========================================
   static TextTheme get darkTextTheme => _buildTextTheme(
-        textColor: AppColors.darkTextPrimary,
-        secondaryColor: AppColors.darkTextSecondary,
-      );
+    textColor: AppColors.darkTextPrimary,
+    secondaryColor: AppColors.darkTextSecondary,
+  );
 
   // ==========================================
   // Text Theme Builder
