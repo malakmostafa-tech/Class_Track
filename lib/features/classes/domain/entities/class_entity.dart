@@ -33,6 +33,15 @@ class ClassEntity {
   /// Whether the class is actively running or archived/disabled.
   final bool isActive;
 
+  /// The lecture room or hall (e.g., 'Engineering 204') as defined in Figma.
+  final String room;
+
+  /// The lecture timing/schedule (e.g., 'Mon / Wed • 10:00 AM') as defined in Figma.
+  final String schedule;
+
+  /// The academic semester/term (e.g., 'Fall 2026') as defined in Figma.
+  final String term;
+
   const ClassEntity({
     required this.id,
     required this.name,
@@ -44,6 +53,9 @@ class ClassEntity {
     this.enrolledStudentIds = const [],
     required this.createdAt,
     this.isActive = true,
+    this.room = '',
+    this.schedule = '',
+    this.term = '',
   });
 
   /// The total number of enrolled students in this class.
@@ -61,6 +73,9 @@ class ClassEntity {
     List<String>? enrolledStudentIds,
     DateTime? createdAt,
     bool? isActive,
+    String? room,
+    String? schedule,
+    String? term,
   }) {
     return ClassEntity(
       id: id ?? this.id,
@@ -73,6 +88,9 @@ class ClassEntity {
       enrolledStudentIds: enrolledStudentIds ?? this.enrolledStudentIds,
       createdAt: createdAt ?? this.createdAt,
       isActive: isActive ?? this.isActive,
+      room: room ?? this.room,
+      schedule: schedule ?? this.schedule,
+      term: term ?? this.term,
     );
   }
 
@@ -90,7 +108,10 @@ class ClassEntity {
         other.teacherName == teacherName &&
         _listEquals(other.enrolledStudentIds, enrolledStudentIds) &&
         other.createdAt == createdAt &&
-        other.isActive == isActive;
+        other.isActive == isActive &&
+        other.room == room &&
+        other.schedule == schedule &&
+        other.term == term;
   }
 
   @override
@@ -104,7 +125,10 @@ class ClassEntity {
         teacherName.hashCode ^
         _listHashCode(enrolledStudentIds) ^
         createdAt.hashCode ^
-        isActive.hashCode;
+        isActive.hashCode ^
+        room.hashCode ^
+        schedule.hashCode ^
+        term.hashCode;
   }
 
   static bool _listEquals(List<String> a, List<String> b) {
@@ -126,6 +150,6 @@ class ClassEntity {
 
   @override
   String toString() {
-    return 'ClassEntity(id: $id, name: $name, courseCode: $courseCode, joinCode: $joinCode, teacherName: $teacherName, studentCount: $studentCount, isActive: $isActive)';
+    return 'ClassEntity(id: $id, name: $name, courseCode: $courseCode, joinCode: $joinCode, teacherName: $teacherName, studentCount: $studentCount, room: $room, schedule: $schedule, term: $term, isActive: $isActive)';
   }
 }
