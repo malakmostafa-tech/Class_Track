@@ -32,12 +32,16 @@ void main() {
     cubit.close();
   });
 
-  Widget createWidgetUnderTest({List<ClassEntity> initialClasses = const []}) {
+  Widget createWidgetUnderTest({
+    String studentName = 'Student',
+    List<ClassEntity> initialClasses = const [],
+  }) {
     return MaterialApp(
       home: BlocProvider<ClassesCubit>.value(
         value: cubit,
         child: StudentClassesPage(
           studentId: 'student_101',
+          studentName: studentName,
           initialClasses: initialClasses,
         ),
       ),
@@ -45,12 +49,60 @@ void main() {
   }
 
   group('StudentClassesPage Widget Tests', () {
-    testWidgets('should render title and Join class action button', (tester) async {
+    testWidgets('should render ClassTrack title and Join class action button', (tester) async {
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pump();
 
-      expect(find.text('Your classes'), findsOneWidget);
+      expect(find.text('ClassTrack'), findsOneWidget);
       expect(find.text('Join class'), findsOneWidget);
+    });
+
+    testWidgets('shows greeting header with student name and empty subtitle', (tester) async {
+      await tester.pumpWidget(createWidgetUnderTest(studentName: 'Ahmed'));
+      await tester.pump();
+
+      // Check student name in greeting
+      expect(find.textContaining('Ahmed'), findsAtLeastNWidgets(1));
+
+      // Check dynamic time greeting prefix
+      final greetingFinder = find.byWidgetPredicate((w) =>
+        w is Text &&
+        (w.data?.contains('Good Morning') == true ||
+         w.data?.contains('Good Afternoon') == true ||
+         w.data?.contains('Good Evening') == true ||
+         w.textSpan?.toPlainText().contains('Good Morning') == true ||
+         w.textSpan?.toPlainText().contains('Good Afternoon') == true ||
+         w.textSpan?.toPlainText().contains('Good Evening') == true)
+      );
+      expect(greetingFinder, findsOneWidget);
+
+      // Check empty state subtitle in greeting header
+      expect(find.text('Join your first class below'), findsOneWidget);
+    });
+
+    testWidgets('shows enrolled count subtitle when student has classes', (tester) async {
+      final sampleClass = ClassEntity(
+        id: 'c1',
+        name: 'Operating Systems',
+        courseCode: 'CS301',
+        description: '',
+        joinCode: 'OS2026',
+        teacherId: 't1',
+        teacherName: 'Dr. OS',
+        enrolledStudentIds: const ['student_101'],
+        createdAt: DateTime.now(),
+        room: 'Lab 1',
+        schedule: 'Tue • 10:00 AM',
+        term: 'Fall 2026',
+      );
+
+      await tester.pumpWidget(createWidgetUnderTest(
+        studentName: 'Ahmed',
+        initialClasses: [sampleClass],
+      ));
+      await tester.pump();
+
+      expect(find.text('You have 1 class enrolled'), findsOneWidget);
     });
 
     testWidgets('should render empty state when student has no classes yet', (tester) async {

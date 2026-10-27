@@ -46,6 +46,57 @@ class _StudentClassesPageState extends State<StudentClassesPage> {
     );
   }
 
+  /// Returns "Good Morning", "Good Afternoon", or "Good Evening" based on current hour.
+  String _greetingPrefix() {
+    final hour = DateTime.now().hour;
+    if (hour >= 5 && hour < 12) return 'Good Morning';
+    if (hour >= 12 && hour < 17) return 'Good Afternoon';
+    return 'Good Evening';
+  }
+
+  Widget _buildGreetingHeader() {
+    final enrolled = _enrolledClasses.length;
+    final classWord = enrolled == 1 ? 'class' : 'classes';
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text.rich(
+            TextSpan(
+              style: const TextStyle(
+                color: AppColors.primaryNavy,
+                fontSize: 24,
+                fontWeight: FontWeight.w800,
+                letterSpacing: -0.3,
+              ),
+              children: [
+                TextSpan(text: '${_greetingPrefix()}, '),
+                TextSpan(
+                  text: widget.studentName,
+                  style: const TextStyle(color: AppColors.brandBlue),
+                ),
+                const TextSpan(text: ' 👋'),
+              ],
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            enrolled == 0
+                ? 'Join your first class below'
+                : 'You have $enrolled $classWord enrolled',
+            style: const TextStyle(
+              color: AppColors.textMuted,
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,11 +105,11 @@ class _StudentClassesPageState extends State<StudentClassesPage> {
         backgroundColor: AppColors.cardWhite,
         elevation: 0,
         title: const Text(
-          'Your classes',
+          'ClassTrack',
           style: TextStyle(
             color: AppColors.primaryNavy,
-            fontSize: 22,
-            fontWeight: FontWeight.w800,
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
           ),
         ),
         actions: [
@@ -115,26 +166,34 @@ class _StudentClassesPageState extends State<StudentClassesPage> {
             );
           }
 
-          if (_enrolledClasses.isEmpty) {
-            return _buildEmptyState();
-          }
-
-          return ListView.builder(
-            padding: const EdgeInsets.all(16.0),
-            itemCount: _enrolledClasses.length,
-            itemBuilder: (context, index) {
-              final classItem = _enrolledClasses[index];
-              return ClassCard(
-                classEntity: classItem,
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => ClassDetailsPage(classEntity: classItem),
-                    ),
-                  );
-                },
-              );
-            },
+          // Greeting always shows at top
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildGreetingHeader(),
+              const Divider(height: 1, color: AppColors.borderLight),
+              Expanded(
+                child: _enrolledClasses.isEmpty
+                    ? _buildEmptyState()
+                    : ListView.builder(
+                        padding: const EdgeInsets.all(16.0),
+                        itemCount: _enrolledClasses.length,
+                        itemBuilder: (context, index) {
+                          final classItem = _enrolledClasses[index];
+                          return ClassCard(
+                            classEntity: classItem,
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => ClassDetailsPage(classEntity: classItem),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+              ),
+            ],
           );
         },
       ),
