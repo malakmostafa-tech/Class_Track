@@ -67,11 +67,11 @@ class _TeacherClassesPageState extends State<TeacherClassesPage> {
         backgroundColor: AppColors.cardWhite,
         elevation: 0,
         title: const Text(
-          'My Classes',
+          'ClassTrack',
           style: TextStyle(
             color: AppColors.primaryNavy,
-            fontSize: 22,
-            fontWeight: FontWeight.w800,
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
           ),
         ),
         actions: [
@@ -164,7 +164,38 @@ class _TeacherClassesPageState extends State<TeacherClassesPage> {
     }).toList();
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Header
+        Container(
+          color: AppColors.cardWhite,
+          width: double.infinity,
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+          child: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'My Classes',
+                style: TextStyle(
+                  color: AppColors.primaryNavy,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              SizedBox(height: 4),
+              Text(
+                'Your teaching schedule and class overview',
+                style: TextStyle(
+                  color: AppColors.textMuted,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              SizedBox(height: 12),
+            ],
+          ),
+        ),
+
         // Search bar (matching Figma "Class name or code")
         Container(
           color: AppColors.cardWhite,

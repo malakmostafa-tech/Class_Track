@@ -45,12 +45,21 @@ void main() {
   }
 
   group('TeacherClassesPage Widget Tests', () {
-    testWidgets('should render AppBar title and Create Class button', (tester) async {
+    testWidgets('should render AppBar title, header subtitle, and Create Class button', (tester) async {
       await tester.pumpWidget(createWidgetUnderTest());
-      await tester.pump();
+      await tester.pumpAndSettle();
 
+      expect(find.text('ClassTrack'), findsOneWidget);
       expect(find.text('My Classes'), findsOneWidget);
+      expect(find.text('Your teaching schedule and class overview'), findsOneWidget);
       expect(find.text('Create class'), findsOneWidget);
+    });
+
+    testWidgets('shows subtitle text below My Classes header', (tester) async {
+      await tester.pumpWidget(createWidgetUnderTest());
+      await tester.pumpAndSettle();
+
+      expect(find.text('Your teaching schedule and class overview'), findsOneWidget);
     });
 
     testWidgets('should render empty state message when doctor has no classes', (tester) async {
