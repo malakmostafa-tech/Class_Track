@@ -142,8 +142,8 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
         indicatorColor: AppColors.blueLight,
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.school_outlined, color: AppColors.textMuted),
-            selectedIcon: Icon(Icons.school_rounded, color: AppColors.brandBlue),
+            icon: Icon(Icons.menu_book_outlined, color: AppColors.textMuted),
+            selectedIcon: Icon(Icons.menu_book_rounded, color: AppColors.brandBlue),
             label: 'Doctor View',
           ),
           NavigationDestination(
