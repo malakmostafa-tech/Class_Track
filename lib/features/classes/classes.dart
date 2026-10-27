@@ -3,7 +3,7 @@
 /// Exports all domain entities, repository interfaces, use cases,
 /// state management controllers, pages, and widgets required for
 /// classes management in ClassTrack.
-library classes;
+library;
 
 // Domain Layer Exports
 export 'domain/entities/class_entity.dart';

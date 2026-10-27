@@ -238,7 +238,7 @@ class ClassDetailsPage extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: students.length,
-              separatorBuilder: (_, __) => const Divider(height: 12, color: AppColors.borderLight),
+              separatorBuilder: (_, _) => const Divider(height: 12, color: AppColors.borderLight),
               itemBuilder: (context, index) {
                 final studentId = students[index];
                 return Row(

@@ -79,6 +79,39 @@ class ClassModel extends ClassEntity {
     );
   }
 
+  @override
+  ClassModel copyWith({
+    String? id,
+    String? name,
+    String? courseCode,
+    String? description,
+    String? joinCode,
+    String? teacherId,
+    String? teacherName,
+    List<String>? enrolledStudentIds,
+    DateTime? createdAt,
+    bool? isActive,
+    String? room,
+    String? schedule,
+    String? term,
+  }) {
+    return ClassModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      courseCode: courseCode ?? this.courseCode,
+      description: description ?? this.description,
+      joinCode: joinCode ?? this.joinCode,
+      teacherId: teacherId ?? this.teacherId,
+      teacherName: teacherName ?? this.teacherName,
+      enrolledStudentIds: enrolledStudentIds ?? this.enrolledStudentIds,
+      createdAt: createdAt ?? this.createdAt,
+      isActive: isActive ?? this.isActive,
+      room: room ?? this.room,
+      schedule: schedule ?? this.schedule,
+      term: term ?? this.term,
+    );
+  }
+
   /// Constructs a [ClassModel] from a pure domain [ClassEntity].
   factory ClassModel.fromEntity(ClassEntity entity) {
     return ClassModel(
